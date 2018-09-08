@@ -12,3 +12,4 @@ for I in divice:
     pass
 def test():
   print("bella")
+  print("test")
