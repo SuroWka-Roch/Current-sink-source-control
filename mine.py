@@ -2,6 +2,12 @@
 #sprawdz odnajdywanie usb maszynek i wsadz je do tego wejścia
 from tkinter import *
 from tkinter import ttk
+from serialInfo import serial_ports
+import gui_function
+#import USB
+#USB.test()
+
+
 
 # Base window creation.
 
@@ -68,7 +74,10 @@ ttk.Label(mainframe, text="µA").grid(column=5, row=4, sticky=E, padx=padingx)
 ttk.Label(mainframe, text="µA").grid(column=5, row=5, sticky=E, padx=padingx)
 
 # status and conection
-usbList = ['cos','cosiek','losiek ', 'łosiek','trata trata rate hope dope']
+usbList = serial_ports()
+if not usbList:
+  usbList=['none found']
+usbList.append("reset")
 
 ttk.Label(mainframe, textvariable=state).grid(column=0, row=6, columnspan=2)
 ttk.Label(mainframe, text='port').grid(column=2, row=6,sticky=E)
@@ -76,7 +85,7 @@ usbPortUsersChose = StringVar()
 comboBox = ttk.Combobox(mainframe, textvariable=usbPortUsersChose,values=usbList)
 comboBox.grid(column=3, row=6, columnspan=2)
 comboBox.set(usbList[0])
-ttk.Button(mainframe, text='connect', command=lambda: state.set(state.get() + '.')).grid(column=5, row=6)
+ttk.Button(mainframe, text='connect', command=lambda: gui_function.ConnectButtonFunction(usbPortUsersChose.get(),state,comboBox)).grid(column=5, row=6)
 
 #send buttom
 
