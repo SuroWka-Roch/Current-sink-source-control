@@ -12,7 +12,8 @@ def ConnectButtonFunction(string,state,usbList):
     resetListTemp.append('reset')
     usbList['values']=tuple(resetListTemp)
     usbList.set(usbList['values'][0])
-
+  if string == "none found":
+    state.set("Try clicing reset")
 
 if __name__ == '__main__':
   pass
