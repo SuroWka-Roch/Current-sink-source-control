@@ -26,7 +26,7 @@ for i in range(6):
 # Window valuables.
 state = StringVar()
 state.set("Do i wonna know if..")
-portValues = [StringVar for _ in range(8)]
+portValues = [StringVar() for _ in range(8)]
 
 # Constants
 padingx = 5
@@ -53,10 +53,13 @@ ttk.Label(mainframe, text="7").grid(column=0, row=5, sticky=W, padx=padingx)
 ttk.Label(mainframe, text="8").grid(column=3, row=5, sticky=W, padx=padingx)
 
 # imput line.
+#temp defoult table
+defaultTable = [i for i in range(8) ]
 entryList = []
 for i in range(8):
   entryList.append(Entry(mainframe, width=10, textvariable=portValues[i]))
   entryList[i].grid(column=1 if i < 4 else 4, row=i+2 if i < 4 else i-2)
+  portValues[i].set(defaultTable[i])
 
 # Unit line.
 ttk.Label(mainframe, text="µA").grid(column=2, row=2, sticky=E, padx=padingx)
@@ -86,6 +89,6 @@ ttk.Button(mainframe, text='connect', command=lambda: gui_function.ConnectButton
 
 #send buttom
 
-ttk.Button(mainframe, text='send').grid(column=4, row=7, columnspan=2, sticky= (W,E))
+ttk.Button(mainframe, text='send', command=lambda: gui_function.SendButtonFunction(portValues,usbPortUsersChose.get())).grid(column=4, row=7, columnspan=2, sticky= (W,E))
 
 root.mainloop()

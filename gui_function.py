@@ -8,16 +8,28 @@ import time
 #Constants
 HANSHAKE_CONFIRM_REQUEST_CODE = b'4'
 HANSHAKE_CONFIRMATION_CODE = b'2'
+COMAND_VOLTAGE_CHANGE = b'5'
 
 
 def HandShake(Portname, state):
   try:
-
+    #open port and make shure my program is running on the arduino
     with serial.Serial(Portname, 9600, timeout=3) as ser:
-      time.sleep(3)
-      print(ser.write(HANSHAKE_CONFIRM_REQUEST_CODE))
+      time.sleep(2)
+      ser.write(HANSHAKE_CONFIRM_REQUEST_CODE)
       ser.flush()
+
+      #handle no information resived problem
       received = ser.read(1)
+      counter = 0
+      while received == b'':
+        received = ser.read(1)
+        time.sleep(0.1)
+        counter = counter+1
+        if counter == 20:
+          break
+
+      print(counter)
       if received == HANSHAKE_CONFIRMATION_CODE:
         return True
       else:
@@ -50,6 +62,30 @@ def ConnectButtonFunction(string,state,usbList):
     else:
       state.set("Arduino sided conection problem")
 
-
+def SendButtonFunction(VoltTable,port):
+  try:
+    with serial.Serial(port, 9600, timeout=3) as ser:
+      informationString = ''
+      for i in range(8):
+        informationString += chr(i+97)
+        tempStr = VoltTable[i].get()
+        if len(tempStr) > 4:
+          raise ValueError('Volt value is out of range')
+        for i in range(4-len(VoltTable[i].get())):
+          tempStr = '0'+ tempStr
+        informationString += tempStr
+      print(informationString)
+      if len(informationString)>40:
+        raise ValueError('The string is to long')
+      informationString += '\0'
+      time.sleep(2)
+      ser.write(COMAND_VOLTAGE_CHANGE)
+      ser.flush()
+      time.sleep(0.5)
+      ser.write(informationString.encode('utf-8'))
+      ser.flush()
+      print('done')
+  except Exception as e:
+    print(str(e))
 if __name__ == '__main__':
   pass
