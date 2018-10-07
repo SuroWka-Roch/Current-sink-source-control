@@ -1,13 +1,9 @@
 #!/usr/bin/env python3.5
-#sprawdz odnajdywanie usb maszynek i wsadz je do tego wejścia
+#contakt usb z kompem
 from tkinter import *
 from tkinter import ttk
 from serialInfo import serial_ports
 import gui_function
-#import USB
-#USB.test()
-
-
 
 # Base window creation.
 
@@ -77,6 +73,7 @@ ttk.Label(mainframe, text="µA").grid(column=5, row=5, sticky=E, padx=padingx)
 usbList = serial_ports()
 if not usbList:
   usbList=['none found']
+  state.set("check if arduino is conected")
 usbList.append("reset")
 
 ttk.Label(mainframe, textvariable=state).grid(column=0, row=6, columnspan=2)
