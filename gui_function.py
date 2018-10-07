@@ -29,7 +29,6 @@ def HandShake(Portname, state):
         if counter == 20:
           break
 
-      print(counter)
       if received == HANSHAKE_CONFIRMATION_CODE:
         return True
       else:
