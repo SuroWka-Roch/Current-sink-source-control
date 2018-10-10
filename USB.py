@@ -4,9 +4,12 @@ import usb.core
 import usb.util
 import serial
 
+
 def test():
   print("bella")
   print("test")
+
+
 def makeUsbList():
   divice = usb.core.find(find_all=True)
   list= [usb for usb in divice if usb.product]
@@ -15,4 +18,3 @@ def makeUsbList():
 
 lista= makeUsbList()
 help(lista[0])
-serial.
