@@ -1,7 +1,11 @@
+//includes 
+#include <Wire.h>
+
 //constants
 #define HANSHAKE_CONFIRM_REQUEST_CODE '4'
 #define HANSHAKE_CONFIRMATION_CODE '2'
-#define COMAND_VOLTAGE_CHANGE '5'
+#define COMAND_VOLTAGE_CHANGE 'v'
+#define VOLTAGE_CHANGE_DONE 'd'
 #define TABLE_SIZE 41
 // Globals :(
 char information[TABLE_SIZE];
@@ -29,6 +33,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(LED_BUILTIN,OUTPUT);
   clearTable(information);
+  
 }
 
 void loop() {
@@ -39,13 +44,16 @@ void loop() {
         Serial.write(HANSHAKE_CONFIRMATION_CODE);
         break;
        case COMAND_VOLTAGE_CHANGE:
-        blink(1000);
+        //blink(1000);
+        //errorBlink();
         if(Serial.readBytesUntil('\0',information,41)==40){
           errorBlink();
-        } 
+        }
+        Serial.write(VOLTAGE_CHANGE_DONE);
+        Serial.flush();
       default:
         Serial.write(info);
     }
   }
-  delay(2);
+  delay(4);
 }

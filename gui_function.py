@@ -9,6 +9,7 @@ import time
 HANSHAKE_CONFIRM_REQUEST_CODE = b'4'
 HANSHAKE_CONFIRMATION_CODE = b'2'
 COMAND_VOLTAGE_CHANGE = b'v'
+VOLTAGE_CHANGE_DONE = b'd'
 
 
 def HandShake(Portname, state):
@@ -84,8 +85,10 @@ def SendButtonFunction(VoltTable,port):
       time.sleep(0.5)
       ser.write(informationString.encode('utf-8'))
       ser.flush()
-      time.sleep(5)
-      print('done')
+      while ser.inWaiting() == 0:
+        time.sleep(0.5)
+      if ser.read()==VOLTAGE_CHANGE_DONE:
+        print('done')
   except Exception as e:
     print(str(e))
 if __name__ == '__main__':
