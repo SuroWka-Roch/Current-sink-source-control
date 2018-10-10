@@ -25,15 +25,20 @@ for i in range(6):
 
 # Window valuables.
 state = StringVar()
-state.set("Do i wonna know if..")
+state.set("Miejsce informacji")
 portValues = [StringVar() for _ in range(8)]
 
 # Constants
 padingx = 5
 
 # Legend line.
+explanationString = '''Program ten jest częścią pracy inżynierskiej Wojciecha Surówki 
+Użycie:
+Na rozsuwanym nemu wybierz port do którego jest połączony modół arduino,
+następnie wciśnij conect w celu sprawdzenia poprawności załadowanego kodu. 
+Po wypełnieniu okienek wartości napięć użyj klawisza send żeby załadować napięcia do układu\n'''
 
-ttk.Label(mainframe, text="Long and confusing what this is and what this is not \nexplanation").grid(column=0, row=0, columnspan=6, sticky=(N, W, E, S), pady=5, padx=3)
+ttk.Label(mainframe, text=explanationString).grid(column=0, row=0, columnspan=6, sticky=(N, W, E, S), pady=5, padx=3)
 ttk.Label(mainframe, text="Port name").grid(column=0, row=1, sticky=W, padx=padingx)
 ttk.Label(mainframe, text="Value").grid(column=1, row=1, sticky=( W, E), padx=padingx)
 ttk.Label(mainframe, text="Unit").grid(column=2, row=1, sticky=E, padx=padingx)

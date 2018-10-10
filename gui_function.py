@@ -8,7 +8,7 @@ import time
 #Constants
 HANSHAKE_CONFIRM_REQUEST_CODE = b'4'
 HANSHAKE_CONFIRMATION_CODE = b'2'
-COMAND_VOLTAGE_CHANGE = b'5'
+COMAND_VOLTAGE_CHANGE = b'v'
 
 
 def HandShake(Portname, state):
@@ -50,6 +50,7 @@ def ConnectButtonFunction(string,state,usbList):
     resetListTemp.append('reset')
     usbList['values'] = tuple(resetListTemp)
     usbList.set(usbList['values'][0])
+    state.set("Wybierz port")
 
   elif string == "none found":
     state.set("Try clicing reset")
@@ -83,6 +84,7 @@ def SendButtonFunction(VoltTable,port):
       time.sleep(0.5)
       ser.write(informationString.encode('utf-8'))
       ser.flush()
+      time.sleep(5)
       print('done')
   except Exception as e:
     print(str(e))
