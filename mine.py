@@ -32,11 +32,11 @@ portValues = [StringVar() for _ in range(8)]
 padingx = 5
 
 # Legend line.
-explanationString = '''Program ten jest częścią pracy inżynierskiej Wojciecha Surówki 
+explanationString = '''Program ten jest częścią pracy inżynierskiej Wojciecha Surówki. 
 Użycie:
-Na rozsuwanym nemu wybierz port do którego jest połączony modół arduino,
-następnie wciśnij conect w celu sprawdzenia poprawności załadowanego kodu. 
-Po wypełnieniu okienek wartości napięć użyj klawisza send żeby załadować napięcia do układu\n'''
+Na rozsuwanym menu wybierz port do którego jest połączony moduł Arduino.
+Następnie wciśnij "conect" w celu sprawdzenia poprawności załadowanego kodu. 
+Po wypełnieniu okienek wartości napięć użyj klawisza "send" żeby załadować napięcia do układu\n'''
 
 ttk.Label(mainframe, text=explanationString).grid(column=0, row=0, columnspan=6, sticky=(N, W, E, S), pady=5, padx=3)
 ttk.Label(mainframe, text="Port name").grid(column=0, row=1, sticky=W, padx=padingx)
