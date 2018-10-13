@@ -59,7 +59,7 @@ ttk.Label(mainframe, text="8").grid(column=3, row=5, sticky=W, padx=padingx)
 
 # imput line.
 #temp defoult table
-defaultTable = [i for i in range(8) ]
+defaultTable = [int((4095/7)*i) for i in range(8)]
 entryList = []
 for i in range(8):
   entryList.append(Entry(mainframe, width=10, textvariable=portValues[i]))

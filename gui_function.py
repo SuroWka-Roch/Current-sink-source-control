@@ -87,8 +87,14 @@ def SendButtonFunction(VoltTable,port):
       ser.flush()
       while ser.inWaiting() == 0:
         time.sleep(0.5)
-      if ser.read()==VOLTAGE_CHANGE_DONE:
+      otrzymane = ser.read()
+      if otrzymane == VOLTAGE_CHANGE_DONE:
         print('done')
+      '''else:
+        while not otrzymane == 'y':
+          print(otrzymane)
+          otrzymane= ser.read()
+'''
   except Exception as e:
     print(str(e))
 if __name__ == '__main__':
