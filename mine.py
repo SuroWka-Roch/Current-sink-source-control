@@ -55,11 +55,7 @@ ttk.Label(mainframe, text="4").grid(column=3, row=2, sticky=W, padx=padingx)
 ttk.Label(mainframe, text="5").grid(column=3, row=3, sticky=W, padx=padingx)
 ttk.Label(mainframe, text="6").grid(column=3, row=4, sticky=W, padx=padingx)
 ttk.Label(mainframe, text="7").grid(column=0, row=5, sticky=W, padx=padingx)
-ttk.Label(mainframe, text="8").grid(column=3, row=5, sticky=W, padx=padingx)
-
-# imput line.
-#temp defoult table
-defaultTable = [int((4095/7)*i) for i in range(8)]
+defaultTable = [int(4000/7* i) for i in range(8)]
 entryList = []
 for i in range(8):
   entryList.append(Entry(mainframe, width=10, textvariable=portValues[i]))
