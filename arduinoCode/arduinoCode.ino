@@ -6,7 +6,7 @@
 #define HANSHAKE_CONFIRMATION_CODE '2'
 #define COMAND_VOLTAGE_CHANGE 'v'
 #define VOLTAGE_CHANGE_DONE 'd'
-#define TABLE_SIZE 41
+#define TABLE_SIZE 41 //8 portów 5 znaków na każdy jeden to symbol potem wartość od 0 do ~4026
 #define DAC_ADRESS 72 //important to działa
 #define DAC_CHANGE_VALUE_AND_UPDATE_4BITS 0x30
 // Globals :(
@@ -57,40 +57,26 @@ void loop() {
         Serial.write(info);
     }
   }
-  delay(300);
+  delay(1000);//niech się nie męczy biedoczek 
 }
 void sendVoltageInformation(){
   char *charP = information; 
   while(*charP!='\0'){
-    if(*charP>='a' && *charP<='h'){
-      int portNumber = int(*charP)-97;
-      int voltValue = int((*(++charP) - 48 ))*1000;
+    if(*charP>='a' && *charP<='h'){ // odnalezienie nazwy portu
+      int portNumber = int(*charP)-97; // przejście z alfabetu na numer a=0 h = 7
+      int voltValue = int((*(++charP) - 48 ))*1000; //zabawa z dziesiątkowym systemem
       for(int i =100;i>=1;i=i/10){
         voltValue += int((*(++charP) - 48))*i;
       }
       j2lComunication(portNumber,voltValue);
-      //Serial.write(voltValue);
       charP++;
     }  
   }  
 }
 void j2lComunication(int portNumber,int voltValue){
-  //Serial.write(voltValue);
   Wire.beginTransmission(DAC_ADRESS); // transmit to device
-  Wire.write(DAC_CHANGE_VALUE_AND_UPDATE_4BITS + portNumber);        // 
-  Wire.write(voltValue/16);              // send pierwszy bit
-  Wire.write((voltValue%16)*16);      //drugi bit 
+  Wire.write(DAC_CHANGE_VALUE_AND_UPDATE_4BITS + portNumber);        // kod to zmień i ustaw
+  Wire.write(voltValue/16);              // send pierwszy bit usuwa ostatnie 4 bajty z 12bajtów 
+  Wire.write((voltValue%16)*16);      //drugi bit odzyskanie końcówki i ustawienie jej na początku 
   Wire.endTransmission();    // stop transmitting
-
-  
-  /*for(int i =0 ;i<8 ;i++){
-  Wire.beginTransmission(DAC_ADRESS); // transmit to device
-  Wire.write(0x30+i);        // 
-  Wire.write(254/2);              // send pierwszy bit
-  Wire.write(254/2);      //drugi bit 
-  if(Wire.endTransmission()== 0)    // stop transmitting
-  {
-  Serial.write('a');
-  }
-  }8*/
 }
