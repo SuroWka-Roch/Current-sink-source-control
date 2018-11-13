@@ -80,7 +80,7 @@ Użycie:
   # status and conection
   usbList = serial_ports()
   if not usbList:
-    usbList=['Nie odnaleziono']
+    usbList=['brak']
     state.set("Sprawdz połączenie Arduino")
   usbList.append("reset")
 

@@ -49,13 +49,13 @@ def ConnectButtonFunction(string,state,usbList):
     #restarting the list of combobox
     resetListTemp=serial_ports()
     if not resetListTemp:
-       resetListTemp.append('nie znaleziono')
+       resetListTemp.append('brak')
     resetListTemp.append('reset')
     usbList['values'] = tuple(resetListTemp)
     usbList.set(usbList['values'][0])
     state.set("Wybierz port")
 
-  elif string == "none found":
+  elif string == "brak":
     state.set("Wybierz reset")
 
   else:
@@ -75,8 +75,9 @@ def Calculate12ByteVoltValue(courent,portNumber):
   """
   courent = float(courent)
   value = courent * REZISTOR_VALUES[portNumber] * 1000 * 2
+  assert(value < 4096 and value > 0, "Calculation error or range extended")
   value = str(round(value, 0))
-  if len(tempStr) > 4:
+  if len(value) > 4:
     raise ValueError('Volt value is out of range in port ' + portNumber)
   return value
 
