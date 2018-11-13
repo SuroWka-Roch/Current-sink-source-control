@@ -75,7 +75,7 @@ def Calculate12ByteVoltValue(courent,portNumber):
   """
   courent = float(courent)
   value = courent * REZISTOR_VALUES[portNumber] * 1000 * 2
-  assert(value < 4096 and value > 0, "Calculation error or range extended")
+  assert value < 4096 and value > 0, "Calculation error or range extended"
   value = str(round(value, 0))
   if len(value) > 4:
     raise ValueError('Volt value is out of range in port ' + portNumber)
