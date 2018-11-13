@@ -12,9 +12,9 @@ COMAND_VOLTAGE_CHANGE = b'v'
 VOLTAGE_CHANGE_DONE = b'd'
 
 
-def HandShake(Portname, state):
+def HandShake(Portname):
   try:
-    #open port and make shure my program is running on the arduino
+    #open port and make sure my program is running on the arduino
     with serial.Serial(Portname, 9600, timeout=3) as ser:
       time.sleep(2)
       ser.write(HANSHAKE_CONFIRM_REQUEST_CODE)
@@ -37,7 +37,6 @@ def HandShake(Portname, state):
         return False
   except Exception as e:
     print(str(e))
-    state.set(str(e))
     return False
 
 
@@ -47,21 +46,21 @@ def ConnectButtonFunction(string,state,usbList):
     #restarting the list of combobox
     resetListTemp=serial_ports()
     if not resetListTemp:
-       resetListTemp.append('none found')
+       resetListTemp.append('nie znaleziono')
     resetListTemp.append('reset')
     usbList['values'] = tuple(resetListTemp)
     usbList.set(usbList['values'][0])
     state.set("Wybierz port")
 
   elif string == "none found":
-    state.set("Try clicing reset")
+    state.set("Wybierz reset")
 
   else:
-    #connect to device and confirm functionality
-    if HandShake(string, state):
-      state.set('Device is conected and the code is loaded.')
+    #Connect to device and confirm functionality
+    if HandShake(string):
+      state.set('Kontroler jest podłączony i sprawny')
     else:
-      state.set("Arduino sided conection problem")
+      state.set("Problem po stronie Arduino")
 
 def SendButtonFunction(VoltTable,port):
   try:
@@ -87,13 +86,13 @@ def SendButtonFunction(VoltTable,port):
       ser.flush()
       while ser.inWaiting() == 0:
         time.sleep(0.5)
-      otrzymane = ser.read()
-      if otrzymane == VOLTAGE_CHANGE_DONE:
+      resived = ser.read()
+      if resived == VOLTAGE_CHANGE_DONE:
         print('done')
       '''else:
-        while not otrzymane == 'y':
-          print(otrzymane)
-          otrzymane= ser.read()
+        while not resived == 'y':
+          print(resived)
+          resived= ser.read()
 '''
   except Exception as e:
     print(str(e))

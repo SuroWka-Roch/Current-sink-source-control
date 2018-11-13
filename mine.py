@@ -35,10 +35,10 @@ def createGuiWindow(defaultTable):
 
   # Legend line.
   explanationString = '''Program ten jest częścią pracy inżynierskiej Wojciecha Surówki. 
-  Użycie:
+Użycie:
   Na rozsuwanym menu wybierz port do którego jest połączony moduł Arduino.
-  Następnie wciśnij "conect" w celu sprawdzenia poprawności załadowanego kodu. 
-  Po wypełnieniu okienek wartości napięć użyj klawisza "send" żeby załadować napięcia do układu\n'''
+  Następnie wciśnij "Połącz" w celu sprawdzenia poprawności załadowanego kodu. 
+  Po wypełnieniu okienek wartości napięć użyj klawisza "Wyślij" żeby załadować wartości napięcia do układu\n'''
 
   ttk.Label(mainframe, text=explanationString).grid(column=0, row=0, columnspan=6, sticky=(N, W, E, S), pady=5, padx=3)
   ttk.Label(mainframe, text="Port name").grid(column=0, row=1, sticky=W, padx=padingx)
@@ -50,13 +50,14 @@ def createGuiWindow(defaultTable):
 
   # Port name line
 
-  ttk.Label(mainframe, text="1").grid(column=0, row=2, sticky=W, padx=padingx)
-  ttk.Label(mainframe, text="2").grid(column=0, row=3, sticky=W, padx=padingx)
-  ttk.Label(mainframe, text="3").grid(column=0, row=4, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="0").grid(column=0, row=2, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="1").grid(column=0, row=3, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="2").grid(column=0, row=4, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="3").grid(column=0, row=5, sticky=W, padx=padingx)
   ttk.Label(mainframe, text="4").grid(column=3, row=2, sticky=W, padx=padingx)
   ttk.Label(mainframe, text="5").grid(column=3, row=3, sticky=W, padx=padingx)
   ttk.Label(mainframe, text="6").grid(column=3, row=4, sticky=W, padx=padingx)
-  ttk.Label(mainframe, text="7").grid(column=0, row=5, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="7").grid(column=3, row=5, sticky=W, padx=padingx)
 
   entryList = []
   for i in range(8):
@@ -78,8 +79,8 @@ def createGuiWindow(defaultTable):
   # status and conection
   usbList = serial_ports()
   if not usbList:
-    usbList=['none found']
-    state.set("check if arduino is conected")
+    usbList=['Nie odnaleziono']
+    state.set("Sprawdz połączenie Arduino")
   usbList.append("reset")
 
   ttk.Label(mainframe, textvariable=state).grid(column=0, row=6, columnspan=2)
@@ -88,10 +89,14 @@ def createGuiWindow(defaultTable):
   comboBox = ttk.Combobox(mainframe, textvariable=usbPortUsersChose,values=usbList)
   comboBox.grid(column=3, row=6, columnspan=2)
   comboBox.set(usbList[0])
-  ttk.Button(mainframe, text='connect', command=lambda: gui_function.ConnectButtonFunction(usbPortUsersChose.get(),state,comboBox)).grid(column=5, row=6)
+  ttk.Button(mainframe, text='Połącz', command=lambda: gui_function.ConnectButtonFunction(usbPortUsersChose.get(),state,comboBox)).grid(column=5, row=6)
 
   #send buttom
 
-  ttk.Button(mainframe, text='send', command=lambda: gui_function.SendButtonFunction(portValues,usbPortUsersChose.get())).grid(column=4, row=7, columnspan=2, sticky= (W,E))
+  ttk.Button(mainframe, text='Wyślij', command=lambda: gui_function.SendButtonFunction(portValues,usbPortUsersChose.get())).grid(column=4, row=7, columnspan=2, sticky= (W,E))
 
   root.mainloop()
+
+if __name__ == '__main__':
+  import main
+
