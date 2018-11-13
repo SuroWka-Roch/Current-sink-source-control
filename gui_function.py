@@ -92,7 +92,7 @@ def SendButtonFunction(VoltTable,port):
         if tempStr == '~':
           continue
         informationString += chr(i+97)
-        tempStr = Calculate12ByteVoltValue(tempStr,i)
+        tempStr = Calculate12ByteVoltValue(tempStr, i)
         for i in range(4-len(VoltTable[i].get())):
           tempStr = '0'+ tempStr
         informationString += tempStr
