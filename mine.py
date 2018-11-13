@@ -38,7 +38,8 @@ def createGuiWindow(defaultTable):
 Użycie:
   Na rozsuwanym menu wybierz port do którego jest połączony moduł Arduino.
   Następnie wciśnij "Połącz" w celu sprawdzenia poprawności załadowanego kodu. 
-  Po wypełnieniu okienek wartości napięć użyj klawisza "Wyślij" żeby załadować wartości napięcia do układu\n'''
+  Po wypełnieniu okienek wartości napięć użyj klawisza "Wyślij" żeby załadować wartości napięcia do układu
+  Użyj symbolu ~ żeby nie zmieniać aktualnej wartości napięcia\n'''
 
   ttk.Label(mainframe, text=explanationString).grid(column=0, row=0, columnspan=6, sticky=(N, W, E, S), pady=5, padx=3)
   ttk.Label(mainframe, text="Port name").grid(column=0, row=1, sticky=W, padx=padingx)
@@ -62,7 +63,7 @@ Użycie:
   entryList = []
   for i in range(8):
     entryList.append(Entry(mainframe, width=10, textvariable=portValues[i]))
-    entryList[i].grid(column=1 if i < 4 else 4, row=i+2 if i < 4 else i-2)
+    entryList[i].grid(column=1 if i < 4 else 4, row=i+2 if i < 4 else i-2,sticky=W)
     portValues[i].set(defaultTable[i])
 
   # Unit line.
@@ -89,7 +90,7 @@ Użycie:
   comboBox = ttk.Combobox(mainframe, textvariable=usbPortUsersChose,values=usbList)
   comboBox.grid(column=3, row=6, columnspan=2)
   comboBox.set(usbList[0])
-  ttk.Button(mainframe, text='Połącz', command=lambda: gui_function.ConnectButtonFunction(usbPortUsersChose.get(),state,comboBox)).grid(column=5, row=6)
+  ttk.Button(mainframe, text='Połącz', command=lambda: gui_function.ConnectButtonFunction(usbPortUsersChose.get(),state,comboBox)).grid(column=5, row=6,sticky = E)
 
   #send buttom
 

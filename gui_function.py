@@ -10,9 +10,12 @@ HANSHAKE_CONFIRM_REQUEST_CODE = b'4'
 HANSHAKE_CONFIRMATION_CODE = b'2'
 COMAND_VOLTAGE_CHANGE = b'v'
 VOLTAGE_CHANGE_DONE = b'd'
-
+#wartość rezystorów w układzie pomniejszona o 1E3
+REZISTOR_VALUES = [1,2,3,4,5,6,7,8]
 
 def HandShake(Portname):
+  """"Sends one Bite code to arduino and returns True if confirmation is resived
+  returns false on any anther occasion"""
   try:
     #open port and make sure my program is running on the arduino
     with serial.Serial(Portname, 9600, timeout=3) as ser:
@@ -62,15 +65,33 @@ def ConnectButtonFunction(string,state,usbList):
     else:
       state.set("Problem po stronie Arduino")
 
+
+def Calculate12ByteVoltValue(courent,portNumber):
+  """Calculate int reprezentation of Volt value for defined courent value
+    returns:
+      Value as string
+    rises:
+      Value error if string is too long
+  """
+  courent = float(courent)
+  value = courent * REZISTOR_VALUES[portNumber] * 1000 * 2
+  value = str(round(value, 0))
+  if len(tempStr) > 4:
+    raise ValueError('Volt value is out of range in port ' + portNumber)
+  return value
+
+
 def SendButtonFunction(VoltTable,port):
+  """Connects to arduino and sends formated information."""
   try:
     with serial.Serial(port, 9600, timeout=3) as ser:
       informationString = ''
       for i in range(8):
-        informationString += chr(i+97)
         tempStr = VoltTable[i].get()
-        if len(tempStr) > 4:
-          raise ValueError('Volt value is out of range')
+        if tempStr == '~':
+          continue
+        informationString += chr(i+97)
+        tempStr = Calculate12ByteVoltValue(tempStr,i)
         for i in range(4-len(VoltTable[i].get())):
           tempStr = '0'+ tempStr
         informationString += tempStr
@@ -89,11 +110,9 @@ def SendButtonFunction(VoltTable,port):
       resived = ser.read()
       if resived == VOLTAGE_CHANGE_DONE:
         print('done')
-      '''else:
-        while not resived == 'y':
+      else:
           print(resived)
-          resived= ser.read()
-'''
+          raise Exception("Voltage change not confirmed")
   except Exception as e:
     print(str(e))
 if __name__ == '__main__':
