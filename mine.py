@@ -42,23 +42,23 @@ Użycie:
   Użyj symbolu ~ żeby nie zmieniać aktualnej wartości napięcia\n'''
 
   ttk.Label(mainframe, text=explanationString).grid(column=0, row=0, columnspan=6, sticky=(N, W, E, S), pady=5, padx=3)
-  ttk.Label(mainframe, text="Port name").grid(column=0, row=1, sticky=W, padx=padingx)
-  ttk.Label(mainframe, text="Value").grid(column=1, row=1, sticky=( W, E), padx=padingx)
-  ttk.Label(mainframe, text="Unit").grid(column=2, row=1, sticky=E, padx=padingx)
-  ttk.Label(mainframe, text="Port name").grid(column=3, row=1, sticky=W, padx=padingx)
-  ttk.Label(mainframe, text="Value").grid(column=4, row=1, sticky=( W, E), padx=padingx)
-  ttk.Label(mainframe, text="Unit").grid(column=5, row=1, sticky=E, padx=padingx)
+  ttk.Label(mainframe, text="Nazwa portu").grid(column=0, row=1, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="Wartość").grid(column=1, row=1, sticky=( W, E), padx=padingx)
+  ttk.Label(mainframe, text="Jednostka").grid(column=2, row=1, sticky=E, padx=padingx)
+  ttk.Label(mainframe, text="Nazwa portu").grid(column=3, row=1, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="Wartość").grid(column=4, row=1, sticky=( W, E), padx=padingx)
+  ttk.Label(mainframe, text="Jednostka").grid(column=5, row=1, sticky=E, padx=padingx)
 
   # Port name line
 
-  ttk.Label(mainframe, text="0").grid(column=0, row=2, sticky=W, padx=padingx)
-  ttk.Label(mainframe, text="1").grid(column=0, row=3, sticky=W, padx=padingx)
-  ttk.Label(mainframe, text="2").grid(column=0, row=4, sticky=W, padx=padingx)
-  ttk.Label(mainframe, text="3").grid(column=0, row=5, sticky=W, padx=padingx)
-  ttk.Label(mainframe, text="4").grid(column=3, row=2, sticky=W, padx=padingx)
-  ttk.Label(mainframe, text="5").grid(column=3, row=3, sticky=W, padx=padingx)
-  ttk.Label(mainframe, text="6").grid(column=3, row=4, sticky=W, padx=padingx)
-  ttk.Label(mainframe, text="7").grid(column=3, row=5, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="RESx25").grid(column=0, row=2, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="CAS").grid(column=0, row=3, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="COMP").grid(column=0, row=4, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="B").grid(column=0, row=5, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="STD").grid(column=3, row=2, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="SH").grid(column=3, row=3, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="PDH").grid(column=3, row=4, sticky=W, padx=padingx)
+  ttk.Label(mainframe, text="AMP").grid(column=3, row=5, sticky=W, padx=padingx)
 
   entryList = []
   for i in range(8):

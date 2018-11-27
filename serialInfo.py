@@ -3,14 +3,12 @@ import sys
 import glob
 import serial
 
-
 def serial_ports():
     """ Lists serial port names
-
-        :raises EnvironmentError:
-            On unsupported or unknown platforms
-        :returns:
-            A list of the serial ports available on the system
+        rises: EnvironmentError:
+            On unknown platforms
+        returns:
+            A list of the serial ports
     """
     if sys.platform.startswith('win'):
         ports = ['COM%s' % (i + 1) for i in range(256)]
@@ -31,7 +29,6 @@ def serial_ports():
         except (OSError, serial.SerialException):
             pass
     return result
-
 
 if __name__ == '__main__':
     print(serial_ports())
