@@ -68,13 +68,13 @@ void sendVoltageInformation(){
       for(int i = 100;i>=1;i=i/10){
         voltValue += int((*(++charP) - 48))*i;
       }
-      j2lComunication(portNumber,voltValue); //Send 
+      j2cComunication(portNumber,voltValue); //Send 
       charP++;
     }  
   }  
 }
 
-void j2lComunication(int portNumber,int voltValue){
+void j2cComunication(int portNumber,int voltValue){
   Wire.beginTransmission(DAC_ADRESS); // Begin transision
   Wire.write(DAC_CHANGE_VALUE_AND_UPDATE_4BITS + portNumber);        // Write code that forces change to votage of port
   Wire.write(voltValue/16);              // Send first bit  
