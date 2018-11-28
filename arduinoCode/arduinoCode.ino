@@ -62,13 +62,13 @@ void loop() {
 void sendVoltageInformation(){
   char *charP = information; 
   while(*charP!='\0'){
-    if(*charP>='a' && *charP<='h'){ // odnalezienie nazwy portu
-      int portNumber = int(*charP)-97; // przejście z alfabetu na numer a=0 h = 7
-      int voltValue = int((*(++charP) - 48 ))*1000; //zabawa z dziesiątkowym systemem
-      for(int i =100;i>=1;i=i/10){
+    if(*charP>='a' && *charP<='h'){ // Find port name
+      int portNumber = int(*charP)-97; // Change symbol to number a=0 h = 7
+      int voltValue = int((*(++charP) - 48 ))*1000; //Handle the decimal system
+      for(int i = 100;i>=1;i=i/10){
         voltValue += int((*(++charP) - 48))*i;
       }
-      j2lComunication(portNumber,voltValue);
+      j2lComunication(portNumber,voltValue); //Send 
       charP++;
     }  
   }  
