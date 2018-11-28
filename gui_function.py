@@ -11,19 +11,19 @@ HANSHAKE_CONFIRMATION_CODE = b'2'
 COMAND_VOLTAGE_CHANGE = b'v'
 VOLTAGE_CHANGE_DONE = b'd'
 #wartość rezystorów w układzie pomniejszona o 1E3
-REZISTOR_VALUES = [1,2,3,4,5,6,7,8]
+REZISTOR_VALUES = (83.333,13.888,62.5,8.333,62.5,41.666,50,41.666)
 
 def HandShake(Portname):
   """"Sends one Bite code to arduino and returns True if confirmation is resived
-  returns false on any anther occasion"""
+  returns false on any another occasion"""
   try:
-    #open port and make sure my program is running on the arduino
+    #open port and make sure my program is running on the Arduino
     with serial.Serial(Portname, 9600, timeout=3) as ser:
       time.sleep(2)
       ser.write(HANSHAKE_CONFIRM_REQUEST_CODE)
       ser.flush()
 
-      #handle no information resived problem
+      #handle no information relived problem
       received = ser.read(1)
       counter = 0
       while received == b'':
