@@ -73,10 +73,12 @@ void sendVoltageInformation(){
     }  
   }  
 }
+
 void j2lComunication(int portNumber,int voltValue){
-  Wire.beginTransmission(DAC_ADRESS); // transmit to device
-  Wire.write(DAC_CHANGE_VALUE_AND_UPDATE_4BITS + portNumber);        // kod to zmień i ustaw
-  Wire.write(voltValue/16);              // send pierwszy bit usuwa ostatnie 4 bajty z 12bajtów 
-  Wire.write((voltValue%16)*16);      //drugi bit odzyskanie końcówki i ustawienie jej na początku 
-  Wire.endTransmission();    // stop transmitting
+  Wire.beginTransmission(DAC_ADRESS); // Begin transision
+  Wire.write(DAC_CHANGE_VALUE_AND_UPDATE_4BITS + portNumber);        // Write code that forces change to votage of port
+  Wire.write(voltValue/16);              // Send first bit  
+  Wire.write((voltValue%16)*16);      //Secend bit, move it to the beginning of sekwence.
+  Wire.endTransmission();    // Stop tranzmiting
 }
+
