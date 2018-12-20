@@ -21,7 +21,7 @@ void blink(int time) {
 }
 
 void errorBlink(){ 
-  for(int i=0; i<20 ;i++){
+  for(int i=0; i<4 ;i++){
     blink(200);
   }
 }
@@ -57,7 +57,7 @@ void loop() {
         Serial.write(info);
     }
   }
-  delay(1000);//niech się nie męczy biedoczek 
+  delay(100);//niech się nie męczy biedoczek 
 }
 void sendVoltageInformation(){
   char *charP = information; 

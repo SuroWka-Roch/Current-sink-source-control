@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.5
+#!/usr/bin/env python3
 from serialInfo import serial_ports
 from tkinter import *
 from tkinter import ttk
@@ -92,7 +92,8 @@ def SendButtonFunction(VoltTable,port):
         if tempStr == '~':
           continue
         informationString += chr(i+97)
-        tempStr = Calculate12ByteVoltValue(tempStr, i)
+        #tempStr = Calculate12ByteVoltValue(tempStr, i)
+        tempStr = VoltTable[i].get()
         for i in range(4-len(VoltTable[i].get())):
           tempStr = '0'+ tempStr
         informationString += tempStr

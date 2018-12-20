@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.5
+#!/usr/bin/env python3
 #contakt usb z kompem
 from tkinter import *
 from tkinter import ttk
