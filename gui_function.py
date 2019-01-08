@@ -4,15 +4,17 @@ from tkinter import *
 from tkinter import ttk
 import serial
 import time
+import random
 
 #Constants
 HANSHAKE_CONFIRM_REQUEST_CODE = b'4'
 HANSHAKE_CONFIRMATION_CODE = b'2'
 COMAND_VOLTAGE_CHANGE = b'v'
 VOLTAGE_CHANGE_DONE = b'd'
-#wartość rezystorów w układzie pomniejszona o 1E3
-REZISTOR_VALUES = (83.333,13.888,62.5,8.333,62.5,41.666,50,41.666)
-
+#wartość rezystorów w układzie pomniejszona o 1E3 każda z wartości jest krotką pierwsza wartość to rezystancja druga to
+#wartość bool mówiąca czy to układ sink=0 czy source=1
+REZISTOR_VALUES = ((83.333,1),(13.888,1),(62.5,1),(8.333,0),(62.5,0),(41.666,1),(50,1),(41.666,0))
+Vcc_VALUE = 3.3
 def HandShake(Portname):
   """"Sends one Bite code to arduino and returns True if confirmation is resived
   returns false on any another occasion"""
@@ -66,19 +68,28 @@ def ConnectButtonFunction(string,state,usbList):
       state.set("Problem po stronie Arduino")
 
 
-def Calculate12ByteVoltValue(courent,portNumber):
-  """Calculate int reprezentation of Volt value for defined courent value
+def Calculate12ByteVoltValue(current, portNumber):
+  """Calculate int reprezentation of Volt value for defined current value
     returns:
       Value as string
     rises:
-      Value error if string is too long
+      Value error if string is too long or out of 12 bit range
   """
-  courent = float(courent)
-  value = courent * REZISTOR_VALUES[portNumber] * 1000 * 2
-  assert value < 4096 and value > 0, "Calculation error or range extended"
-  value = str(round(value, 0))
+  current = float(current)
+  print(current)
+  value = 0
+  if REZISTOR_VALUES[portNumber][1] == 0: #odnalezienie portów sink
+    value = current * REZISTOR_VALUES[portNumber][0] *1E3 # wzor plus przeliczenie z koloohmow do omow
+    value = value/1E6 #z mikro do amperow
+    value = value/3.0*4095 #mapowanie do 12 bitow
+  else:
+    value = Vcc_VALUE - current/1E6 * REZISTOR_VALUES[portNumber][0] * 1E3
+    value = value/3.0*4095
+  if value > 4095 or value < 0:
+    raise ValueError('Mapping error value out of range for 12 bit  port name ' + str(portNumber) +" value "+ str(value))
+  value = str(int(round(value, 0)))
   if len(value) > 4:
-    raise ValueError('Volt value is out of range in port ' + portNumber)
+    raise ValueError('Volt value is out of range in port ' + str(portNumber) +"value " + str(value))
   return value
 
 
@@ -92,8 +103,7 @@ def SendButtonFunction(VoltTable,port):
         if tempStr == '~':
           continue
         informationString += chr(i+97)
-        #tempStr = Calculate12ByteVoltValue(tempStr, i)
-        tempStr = VoltTable[i].get()
+        tempStr = Calculate12ByteVoltValue(tempStr, i)
         for i in range(4-len(VoltTable[i].get())):
           tempStr = '0'+ tempStr
         informationString += tempStr
