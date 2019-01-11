@@ -76,6 +76,7 @@ def Calculate12ByteVoltValue(current, portNumber):
       Value error if string is too long or out of 12 bit range
   """
   current = float(current)
+  current = current *2 # It goes for 2 sets not only one
   #print(current)
   value = 0
   if REZISTOR_VALUES[portNumber][1] == 0: #odnalezienie portów sink
