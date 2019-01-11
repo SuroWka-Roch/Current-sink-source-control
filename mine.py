@@ -10,7 +10,7 @@ def createGuiWindow(defaultTable):
   # Base window creation.
 
   root = Tk()
-  root.title("Inżynierka")
+  root.title("Program kontroli prądów polaryzacyjnych")
   root.columnconfigure(0, weight=1)
   root.rowconfigure(0, weight=1)
 
@@ -38,8 +38,8 @@ def createGuiWindow(defaultTable):
 Użycie:
   Na rozsuwanym menu wybierz port do którego jest połączony moduł Arduino.
   Następnie wciśnij "Połącz" w celu sprawdzenia poprawności załadowanego kodu. 
-  Po wypełnieniu okienek wartości napięć użyj klawisza "Wyślij" żeby załadować wartości napięcia do układu
-  Użyj symbolu "~" żeby nie zmieniać aktualnej wartości napięcia\n'''
+  Po wypełnieniu okienek wartości prądów użyj klawisza "Wyślij" żeby załadować wartości natężeń do układu
+  Użyj symbolu "~" żeby nie zmieniać aktualnej wartości natężenia\n'''
 
   ttk.Label(mainframe, text=explanationString).grid(column=0, row=0, columnspan=6, sticky=(N, W, E, S), pady=5, padx=3)
   ttk.Label(mainframe, text="Nazwa portu").grid(column=0, row=1, sticky=W, padx=padingx)

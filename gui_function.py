@@ -76,14 +76,14 @@ def Calculate12ByteVoltValue(current, portNumber):
       Value error if string is too long or out of 12 bit range
   """
   current = float(current)
-  print(current)
+  #print(current)
   value = 0
   if REZISTOR_VALUES[portNumber][1] == 0: #odnalezienie portów sink
     value = current * REZISTOR_VALUES[portNumber][0] *1E3 # wzor plus przeliczenie z koloohmow do omow
     value = value/1E6 #z mikro do amperow
     value = value/3.0*4095 #mapowanie do 12 bitow
   else:
-    value = Vcc_VALUE - current/1E6 * REZISTOR_VALUES[portNumber][0] * 1E3
+    value = Vcc_VALUE - (current * REZISTOR_VALUES[portNumber][0] / 1E3)
     value = value/3.0*4095
   if value > 4095 or value < 0:
     raise ValueError('Mapping error value out of range for 12 bit  port name ' + str(portNumber) +" value "+ str(value))
@@ -104,7 +104,7 @@ def SendButtonFunction(VoltTable,port):
           continue
         informationString += chr(i+97)
         tempStr = Calculate12ByteVoltValue(tempStr, i)
-        for i in range(4-len(VoltTable[i].get())):
+        for i in range(4-len(tempStr)):
           tempStr = '0'+ tempStr
         informationString += tempStr
       print(informationString)
