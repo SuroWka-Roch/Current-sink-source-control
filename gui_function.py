@@ -32,7 +32,7 @@ def HandShake(Portname):
         received = ser.read(1)
         time.sleep(0.1)
         counter = counter+1
-        if counter == 4:
+        if counter == 2:
           break
 
       if received == HANSHAKE_CONFIRMATION_CODE:
