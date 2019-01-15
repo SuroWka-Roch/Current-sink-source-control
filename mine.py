@@ -94,10 +94,8 @@ Użycie:
 
   #send buttom
 
-  ttk.Button(mainframe, text='Wyślij', command=lambda: gui_function.SendButtonFunction(portValues,usbPortUsersChose.get())).grid(column=4, row=7, columnspan=2, sticky= (W,E))
-
+  ttk.Button(mainframe, text='Wyślij', command=lambda: gui_function.SendButtonFunction(portValues,usbPortUsersChose.get(),state)).grid(column=4, row=7, columnspan=2, sticky= (W,E))
   root.mainloop()
-
 if __name__ == '__main__':
   import main
 

@@ -87,14 +87,14 @@ def Calculate12ByteVoltValue(current, portNumber):
     value = Vcc_VALUE - (current * REZISTOR_VALUES[portNumber][0] / 1E3)
     value = value/3.0*4095
   if value > 4095 or value < 0:
-    raise ValueError('Mapping error value out of range for 12 bit  port name ' + str(portNumber) +" value "+ str(value))
+    raise ValueError('Mapping err: port num ' + str(portNumber+1) +", value "+ str(int(value)))
   value = str(int(round(value, 0)))
   if len(value) > 4:
     raise ValueError('Volt value is out of range in port ' + str(portNumber) +"value " + str(value))
   return value
 
 
-def SendButtonFunction(VoltTable,port):
+def SendButtonFunction(VoltTable,port,state):
   """Connects to arduino and sends formated information."""
   try:
     with serial.Serial(port, 9600, timeout=3) as ser:
@@ -127,6 +127,6 @@ def SendButtonFunction(VoltTable,port):
           print(resived)
           raise Exception("Voltage change not confirmed")
   except Exception as e:
-    print(str(e))
+    state.set(str(e))
 if __name__ == '__main__':
   pass

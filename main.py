@@ -4,7 +4,7 @@
 
 from mine import createGuiWindow
 try:
-  with open('defValues','r') as file:
+  with open('defValues.txt','r') as file:
     defaultTable = [ val.strip('\n') for val in file ]
     if len(defaultTable) > 8:
       defaultTable = defaultTable[0:8]
